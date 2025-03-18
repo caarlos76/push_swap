@@ -23,16 +23,19 @@ int main(int ac, char **av)
 		return (1);
 	if (av == 2)
 		av = ft_split(av[1],' ');
-	stack_start(a,av + 1,ac == 2);
+	stack_start(&a,av + 1,ac == 2);
 	// hacemos un if si stack esta ordenado o no
 	// si esta ordenado no hacemos nada
 	// si no esta ordenado hacemos el algoritmo
 	if(!is_sorted(a))
 	{
-		if(stack_len(a) == 2)
-			sa(a);
-		if(stack_len(a) == 3)
-			sort_three(a);
-		
+		if(stack_len(&a) == 2)
+			sa(&a);
+		if(stack_len(&a) == 3)
+			sort_three(&a);
+		else
+			sort(&a,&b);
 	}
+	free_stack(&a);
+	return (0);
 }

@@ -25,7 +25,7 @@ typedef struct s_stack_node
 	int		value;
 	int		position;
 	int		move_price;
-	int		final_index;
+	int		index;
 	bool	media_moves;
 	bool	cheap;
 	struct s_stack_node *target_node;

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "includes/push_swap.h"
-static void push(node_stack **src, node_stack **dst)
+static void push(node_stack **dst, node_stack **src)
 {
 	node_stack *p_node;
 	if(!*src)
@@ -27,7 +27,7 @@ static void push(node_stack **src, node_stack **dst)
 	}
 	else
 	{
-		p_node->next = dst;
+		p_node->next = *dst;
 		p_node->next->prev = p_node;
 		p_node->next = NULL; 
 	}

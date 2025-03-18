@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/push_swap.h"
+#include "../includes/push_swap.h"
 
 // a es la pila, str es el argv y control es argc == 2
 void stack_start(node_stack **a,char **av, bool control)
@@ -23,7 +23,7 @@ void stack_start(node_stack **a,char **av, bool control)
 	{
 		if (error_s(av[i]))
 			error_and_free(a,av,control);
-		num = ft_atoi(av);
+		num = ft_atoi(av[i]);
 		if (num <= INT_MIN || num >= INT_MAX)
 			error_and_free(a,av,control);
 		if(error_rep(*a,num))
