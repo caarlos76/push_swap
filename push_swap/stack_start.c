@@ -28,7 +28,7 @@ void stack_start(node_stack **a,char **av, bool control)
 			error_and_free(a,av,control);
 		if(error_rep(*a,num))
 			error_and_free(a,av,control);
-		insert_node(*a,num);
+		insert_node(a,num);
 		i++;
 	}
 	if (control)

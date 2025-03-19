@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/push_swap.h"
+#include "../includes/push_swap.h"
 // si existe un tercer nodo su puntero prev se actuali para que apunte al primer nodo
 //cambiamos el puntero del segundo nodo para que apunte en next al primer nodo
 // y hacemos que el previo sea nulo porque al ser el primero de la lista no tiene previo

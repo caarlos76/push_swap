@@ -16,7 +16,7 @@
 node_stack	*f_last_node(node_stack *first)
 {
 	if (first == NULL)
-		return;
+		return NULL;
 	while (first->next)
 		first = first->next;
 	return (first);
@@ -35,12 +35,12 @@ void	insert_node(node_stack **a,int num)
 	node->next = NULL;
 	if (*a == NULL)
 	{
-		a = node;
+		*a = node;
 		node->prev = NULL;
 	}
 	else
 	{
-		last_node = f_last_node(a);
+		last_node = f_last_node(*a);
 		last_node->next = node;
 		node->prev = last_node;
 	}
@@ -83,7 +83,7 @@ node_stack	*find_bigger(node_stack *stack)
 	node_stack	*node_max;
 
 	if(!stack)
-		return;
+		return NULL;
 	max = LONG_MAX;
 	while (stack)
 	{
@@ -95,4 +95,23 @@ node_stack	*find_bigger(node_stack *stack)
 		stack = stack->next;
 	}
 	return(node_max);
+}
+node_stack *find_min(node_stack *stack)
+{
+	long min;
+	node_stack *node_min;
+
+	if(!stack)
+		return NULL;
+	min = LONG_MAX;
+	while(stack)
+	{
+		if(stack->value < min)
+		{
+			min = stack->value;
+			node_min = stack;
+		}
+		stack = stack->next;
+	}
+	return(node_min);
 }

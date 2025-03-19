@@ -10,17 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/push_swap.h"
+#include "../includes/push_swap.h"
 static void reverse_rotate(node_stack **stack)
 {
 	node_stack *last;
-	if(*stack == NULL | (*stack)->next == NULL)
+	if(!*stack || !(*stack)->next)
 		return ;
 	last = last_node(*stack);
 	last->prev->next = NULL;
 	last->next = *stack;
 	last->prev = NULL;
-	stack = last;
+	*stack = last;
 	last->next->prev = last;
 }
 void rra(node_stack **a)

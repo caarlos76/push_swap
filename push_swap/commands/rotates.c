@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/push_swap.h"
+#include "../includes/push_swap.h"
 static void rotate(node_stack **stack)
 {
 	node_stack *last;
-	if(*stack == NULL | (*stack)->next == NULL)
+	if(!*stack || !(*stack)->next)
 		return ;
 	last = last_node(*stack);
 	last->next = *stack;
-	stack = (*stack)->next;
+	*stack = (*stack)->next;
 	(*stack)->prev = NULL;
 	last->next->prev = last;
 	last->next->next = NULL;
