@@ -14,7 +14,8 @@
 void sort_three(node_stack **a)
 {
 	node_stack *bigger;
-	
+	if (is_sorted(*a))
+		return ;
 	bigger = find_bigger(*a);
 	if(bigger == *a)
 		ra(a);

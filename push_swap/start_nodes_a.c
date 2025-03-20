@@ -22,17 +22,19 @@ void assing_index(node_stack **stack)
 }
 static void assing_target_a(node_stack **a, node_stack **b)
 {
+    node_stack *tmp_a;
     node_stack *tmp_b;
     node_stack *target_node;
     int best;
-    while(*a)
+    tmp_a = *a;
+    while(tmp_a)
     {
         tmp_b = *b;
         best = INT_MAX;
         target_node= NULL;
         while(tmp_b)
         {
-            if(tmp_b->value < (*a)->value && tmp_b->value > best)
+            if(tmp_b->value < (tmp_a)->value && tmp_b->value > best)
             {
                 best = tmp_b->value;
                 target_node = tmp_b;
@@ -41,7 +43,8 @@ static void assing_target_a(node_stack **a, node_stack **b)
         }
         if(!target_node)
             target_node = find_bigger(*b);
-        (*a)->target_node = target_node;
+        (tmp_a)->target_node = target_node;
+        tmp_a = (tmp_a)->next;
     }
 }
 
@@ -79,6 +82,7 @@ static void assing_cheap(node_stack **stack)
     cheap = INT_MAX;
     node_cheap = NULL;
     tmp = *stack;
+    tmp->cheap = false;
     while (tmp)
     {
         if((tmp)->move_price < cheap)
@@ -95,6 +99,8 @@ static void assing_cheap(node_stack **stack)
 
 void start_nodes_a(node_stack **a, node_stack **b)
 {
+    if(!*b)
+        return ;
     assing_index(a);
     assing_index(b);
     assing_target_a(a,b);

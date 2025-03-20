@@ -42,7 +42,7 @@ void	error_and_free(node_stack **a, char **av, bool control);
 //Error sintax
 int		error_s(char *av);
 //error repetition
-int		error_rep(node_stack *a,int num);
+int		error_rep(node_stack *a, long num);
 //free stack
 void	free_stack(node_stack **a);
 //free av

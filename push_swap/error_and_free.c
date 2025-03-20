@@ -14,23 +14,26 @@
 
 int	error_s(char *av)
 {
+	if(!av ||*av == '\0')
+		return (1);
 	if (!(*av == '-' || *av == '+'
 			|| (*av >= '0' || *av <= '9')))
 		return (1);
 	if ((*av == '-'|| *av == '+')
 		&& !(av[1] >= '0' || av[1] <= '9'))
 		return (1);
-	while (av++)
+	while (*av)
 	{
 		if (!(*av >= '0' || *av <= '9'))
 			return (1);
+		av++;
 	}
 	return (0);
 }
-int	error_rep(node_stack *a,int num)
+int	error_rep(node_stack *a,long num)
 {
-	if (a == NULL)
-		return (1);
+	if (!a)
+		return (0);
 	while (a)
 	{
 		if(a->value == num)

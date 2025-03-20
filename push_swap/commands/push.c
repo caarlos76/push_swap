@@ -19,7 +19,8 @@ static void push(node_stack **dst, node_stack **src)
 	p_node = *src;
 	*src = (*src)->next;
 	if (*src)
-		(*src)->next = NULL;
+		(*src)->prev = NULL;
+	p_node->prev = NULL;
 	if(!*dst)
 	{
 		*dst = p_node;
@@ -28,8 +29,8 @@ static void push(node_stack **dst, node_stack **src)
 	else
 	{
 		p_node->next = *dst;
-		p_node->next->prev = p_node;
-		p_node->next = NULL; 
+        (*dst)->prev = p_node;
+        *dst = p_node;
 	}
 }
 void	pa(node_stack **a,node_stack **b)

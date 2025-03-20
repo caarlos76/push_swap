@@ -27,10 +27,16 @@ void	insert_node(node_stack **a,int num)
 	node_stack	*last_node;
 	
 	if (a == NULL)
+	{
+		error_and_free(a,NULL,false);
 		return ;
+	}
 	node = malloc(sizeof(node_stack));
 	if (node == NULL)
+	{
+		error_and_free(a,NULL,false);
 		return ;
+	}
 	node->value = num;
 	node->next = NULL;
 	if (*a == NULL)
@@ -49,12 +55,18 @@ void	insert_node(node_stack **a,int num)
 // si el stack a esta ordenado me devuelve true, sino me devuelve false
 bool is_sorted(node_stack *a)
 {
+	if(!a)
+		return (true);
 	while(a->next)
 	{
 		if(a->value > a->next->value)
-			return (false);
+		{
+            ft_printf("Pila no ordenada: %d > %d\n", a->value, a->next->value);
+            return false;
+        }
 		a = a->next;
 	}
+	ft_printf("Pila ordenada\n");
 	return (true);
 }
 int stack_len(node_stack *a)
@@ -71,7 +83,7 @@ int stack_len(node_stack *a)
 }
 node_stack	*last_node(node_stack *first)
 {
-	if(first == NULL)
+	if(!first)
 		return (NULL);
 	while(first->next)
 		first = first->next;
@@ -104,6 +116,7 @@ node_stack *find_min(node_stack *stack)
 	if(!stack)
 		return NULL;
 	min = LONG_MAX;
+	node_min = NULL;
 	while(stack)
 	{
 		if(stack->value < min)
