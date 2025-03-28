@@ -6,7 +6,7 @@
 /*   By: ctaboada <ctaboada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:56:20 by ctaboada          #+#    #+#             */
-/*   Updated: 2025/03/21 13:10:23 by ctaboada         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:48:34 by ctaboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@
 	average = stack_len(*stack) / 2;
 	while(tmp_stack)
 	{
-		(tmp_stack)->index = i;
-		if(i < average)
-			(tmp_stack)->media_moves = true;
+		tmp_stack->index = i;
+		if(i <= average)
+			tmp_stack->media_moves = true;
 		else
-			(tmp_stack)->media_moves = false;
+			tmp_stack->media_moves = false;
 		i++;
-		tmp_stack = (tmp_stack)->next;
+		tmp_stack = tmp_stack->next;
 	}
 	}
 	static void assing_target_a(node_stack **a, node_stack **b)
@@ -37,12 +37,14 @@
 	node_stack *tmp_a;
 	node_stack *tmp_b;
 	node_stack *target_node;
-	int best;
+	long best;
+	if(b == NULL || *b == NULL)
+		return ;
 	tmp_b = *b;
     while (tmp_b)
     {
         tmp_a = *a;
-        best = INT_MAX;
+        best = LONG_MAX;
         target_node = NULL;
         while (tmp_a)
         {
@@ -60,30 +62,30 @@
     }
 	}
 
-	static void cost_analysis(node_stack **a,node_stack **b)
+	static void cost_analysis(node_stack *a,node_stack *b)
 	{
 	int len_a;
 	int len_b;
-	node_stack *tmp_a;
+	node_stack *tmp_b;
 
-	len_a = stack_len(*a);
-	len_b = stack_len(*b);
-	tmp_a = *a;
-	while (tmp_a)
+	len_a = stack_len(a);
+	len_b = stack_len(b);
+	tmp_b = b;
+	while (tmp_b)
 	{
-		if((tmp_a)->media_moves)
-			(tmp_a)->move_price = (tmp_a)->index;
+		if((tmp_b)->media_moves)
+			(tmp_b)->move_price = (tmp_b)->index;
 		else
-			(tmp_a)->move_price = len_a - (tmp_a)->index;
-		if((tmp_a)->target_node->media_moves)
-			(tmp_a)->move_price += (tmp_a)->target_node->index;
+			(tmp_b)->move_price = len_a - (tmp_b)->index;
+		if((tmp_b)->target_node->media_moves)
+			(tmp_b)->move_price += (tmp_b)->target_node->index;
 		else
-			(tmp_a)->move_price += len_b - (tmp_a)->target_node->index;
-		tmp_a = (tmp_a)->next;
+			(tmp_b)->move_price += len_b - (tmp_b)->target_node->index;
+		tmp_b = (tmp_b)->next;
 	}
 	}
 
-	static void assing_cheap(node_stack **stack)
+	void assing_cheap(node_stack **stack)
 	{
 	int cheap;
 	node_stack *node_cheap;
@@ -94,7 +96,12 @@
 	cheap = INT_MAX;
 	node_cheap = NULL;
 	tmp = *stack;
-	tmp->cheap = false;
+	while (tmp)
+	{
+		tmp->cheap = false;
+		tmp = tmp ->next;
+	}
+	tmp = *stack;
 	while (tmp)
 	{
 		if((tmp)->move_price < cheap)
@@ -109,13 +116,13 @@
 	}
 
 
-	void start_nodes_a(node_stack **a, node_stack **b)
+	void start_nodes(node_stack **a, node_stack **b)
 	{
 	if(!*b)
 		return ;
 	assing_index(a);
 	assing_index(b);
 	assing_target_a(a,b);
-	cost_analysis(a,b);
-	assing_cheap(a); 
+	cost_analysis(*a,*b);
+	assing_cheap(b); 
 	}

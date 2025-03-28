@@ -6,7 +6,7 @@
 #    By: ctaboada <ctaboada@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/11 11:39:08 by ctaboada          #+#    #+#              #
-#    Updated: 2025/03/21 12:05:31 by ctaboada         ###   ########.fr        #
+#    Updated: 2025/03/25 15:13:57 by ctaboada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = push_swap
 
 # Compiler and flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 # Directories
 SRCDIR = .

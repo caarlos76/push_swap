@@ -6,7 +6,7 @@
 /*   By: ctaboada <ctaboada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 12:24:54 by ctaboada          #+#    #+#             */
-/*   Updated: 2025/03/17 12:45:13 by ctaboada         ###   ########.fr       */
+/*   Updated: 2025/03/25 14:59:43 by ctaboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ static void swap(node_stack **stack)
 	second = (*stack)->next;
 	if(second->next != NULL)
 		second->next->prev = first;
+	first->next = second->next;
 	second->next = first;
 	second->prev = NULL;
 	first->prev = second;
-	first->next = second->next;
 	*stack = second;
 }
 

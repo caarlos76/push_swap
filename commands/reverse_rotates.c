@@ -6,7 +6,7 @@
 /*   By: ctaboada <ctaboada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:44:21 by ctaboada          #+#    #+#             */
-/*   Updated: 2025/03/17 12:44:29 by ctaboada         ###   ########.fr       */
+/*   Updated: 2025/03/25 14:56:55 by ctaboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 static void reverse_rotate(node_stack **stack)
 {
 	node_stack *last;
+	node_stack *second_last;
 	if(!*stack || !(*stack)->next)
 		return ;
 	last = last_node(*stack);
-	last->prev->next = NULL;
-	last->next = *stack;
-	last->prev = NULL;
-	*stack = last;
-	last->next->prev = last;
+	second_last = last->prev;
+	
+	second_last->next = NULL;   // El penúltimo nodo se convierte en el último
+    last->prev = NULL;          // El nuevo primer nodo no tiene anterior
+    last->next = *stack;        // Conecta el antiguo último nodo al principio
+    (*stack)->prev = last;      // Actualiza el puntero `prev` del antiguo primer nodo
+    *stack = last;    
 }
 void rra(node_stack **a)
 {

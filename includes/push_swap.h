@@ -6,7 +6,7 @@
 /*   By: ctaboada <ctaboada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:40:07 by ctaboada          #+#    #+#             */
-/*   Updated: 2025/03/17 12:59:04 by ctaboada         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:48:29 by ctaboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ node_stack	*find_bigger(node_stack *stack);
 void assing_index(node_stack **stack);
 
 //start nodes in a, to see what node is cheaper to move, and put a index to the nodes, find the object node in stack b, calculate the cost of the move
-void start_nodes_a(node_stack **a, node_stack **b);
-//
-void start_nodes_b(node_stack **a, node_stack **b);
+void start_nodes(node_stack **a, node_stack **b);
 //commands
 void	sa(node_stack **a);
 void	sb(node_stack **b);
@@ -77,6 +75,8 @@ void	rra(node_stack **a);
 void	rrb(node_stack **b);
 void	rrr(node_stack **a,node_stack **b);
 
+//assign cheap
+void assing_cheap(node_stack **stack);
 //sort 
 void sort_three(node_stack **a);
 void sort(node_stack **a, node_stack **b);
