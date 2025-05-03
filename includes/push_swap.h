@@ -57,6 +57,10 @@ node_stack	*last_node(node_stack *first);
 node_stack	*find_min(node_stack *stack);
 //find the bigger node
 node_stack	*find_bigger(node_stack *stack);
+
+node_stack *return_cheap(node_stack *stack);
+
+
 //put a number to each node of the stack, and look if the node is above average
 void assing_index(node_stack **stack);
 
@@ -79,6 +83,8 @@ void	rrr(node_stack **a,node_stack **b);
 void assing_cheap(node_stack **stack);
 //sort 
 void sort_three(node_stack **a);
+void sort_small(node_stack **a,node_stack **b);
 void sort(node_stack **a, node_stack **b);
+//void sort_by_index(node_stack **stack_a, node_stack **stack_b);
 
 #endif

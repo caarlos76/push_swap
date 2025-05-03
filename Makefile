@@ -14,7 +14,7 @@
 NAME = push_swap
 
 # Compiler and flags
-CC = cc
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
 
 # Directories
@@ -41,18 +41,20 @@ $(LIBFT):
 	@$(MAKE) -s -C $(LIBFTDIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@mkdir -p $(OBJDIR)/commands
+	@if not exist "$(OBJDIR)\commands" mkdir "$(OBJDIR)\commands"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
+
 clean:
-	@rm -rf $(OBJDIR)
+	@rd /s /q $(OBJDIR) 2>nul || cmd /c exit 0
 	@$(MAKE) -s -C $(LIBFTDIR) clean
 	@echo "Object files removed."
 
 fclean: clean
-	@rm -f $(NAME)
+	@del $(NAME) 2>nul || cmd /c exit 0
 	@$(MAKE) -s -C $(LIBFTDIR) fclean
 	@echo "Executable $(NAME) removed."
+
 
 re: fclean all
 

@@ -126,3 +126,18 @@ node_stack *find_min(node_stack *stack)
 	}
 	return(node_min);
 }
+node_stack *return_cheap(node_stack *stack)
+{
+	if (stack == NULL)
+		return (NULL);
+	while (stack)
+	{
+		if (stack->cheap)
+		{
+			return(stack);
+		}
+		stack = stack->next;
+	}
+	return(NULL);
+	
+}

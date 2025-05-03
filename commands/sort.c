@@ -6,115 +6,104 @@
 /*   By: ctaboada <ctaboada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:28:47 by ctaboada          #+#    #+#             */
-/*   Updated: 2025/03/28 16:20:21 by ctaboada         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:20:21 by ctaboada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
-static void move_a_to_b(node_stack **a,node_stack **b)
+static int size_chunk(int size)
 {
-	assing_cheap(a);
-    node_stack *cheap = *a;
-	while (cheap && !cheap->cheap)
-		cheap = cheap->next;
-	
-    if (cheap)
+	if(size <= 100)
+		return 20; // para 100 5 chunks de 20
+	else
+		return 45; // para 500 11 chunks de 45
+}
+static void push_chunk_b(node_stack **a,node_stack **b,int start, int end)
+{
+	int pushed;
+	int size;
+
+	pushed = 0;
+	size = stack_len(*a);
+	while (pushed < (end - start + 1) && size > 0)
 	{
-		while(*a != cheap)
+		if ((*a)->index >= start && (*a)->index <= end)
 		{
-			if(cheap->media_moves)
-				ra(a);
-			else
-				rra(a);
+			pb(b, a);
+			pushed++;
 		}
-		pb(b,a);
+		else
+			ra(a);
+		size--;
 	}
 }
-static node_stack *find_target_node(node_stack *a, node_stack *b_node)
+int get_max_position_index(node_stack **stack)
 {
-    node_stack *current = a;
-    node_stack *best_target = NULL;
-
-    while (current)
+	node_stack *tmp = *stack;
+	int max_index = tmp->index;
+	int max_pos = 0;
+	int current_pos = 0;
+	
+	while(tmp)
+	{
+		if(tmp->index > max_index)
+		{
+			max_index = tmp->index;
+			max_pos = current_pos;
+		}
+		tmp = tmp->next;
+		current_pos++;
+	}
+	return(max_pos);
+}
+static void move_to_top(node_stack **stack, int pos)
+{
+    int size;
+    
+    size = stack_len(*stack);
+    if (pos <= size / 2) // Si la posición está en la primera mitad
     {
-        if (!best_target || (current->value > b_node->value && current->value < best_target->value))
-            best_target = current;
-        current = current->next;
+        while (pos > 0) // Rotamos hacia arriba
+        {
+            rb(stack);
+            pos--;
+        }
     }
-
-    // Si no hay un nodo mayor, devolver el menor (circularidad)
-    if (!best_target)
-        best_target = find_min(a);
-
-    return best_target;
+    else // Si la posición está en la segunda mitad
+    {
+        pos = size - pos;
+        while (pos > 0) // Rotamos hacia abajo
+        {
+            rrb(stack);
+            pos--;
+        }
+    }
 }
-static void move_b_to_a(node_stack **a,node_stack **b)
-{
-	assing_cheap(b);
-	node_stack *cheap = *b;
-	while (cheap && !cheap->cheap)
-		cheap = cheap->next;
-	if (cheap)
-	{
-		while(*b != cheap)
-		{
-			if(cheap->media_moves)
-				rb(b);
-			else
-				rrb(b);
-		}
-	}
-	if(!cheap->target_node)
-		cheap->target_node = find_target_node(*a,cheap);
-	// rotar a para posicionar el nodo objetivo
-	node_stack *target =cheap->target_node;
-	if(!target)
-		return ;
-	while (*a != target)
-	{
-		if(target->media_moves)
-			ra(a);
-		else
-			rra(a);
-	}
-	pa(a,b);
-}
-
-static void min_on_top(node_stack **a)
-{
-	while ((*a)->value != find_min(*a)->value)
-	{
-		if(find_min(*a)->media_moves)
-			ra(a);
-		else
-			rra(a);
-	}
-	
-}
-
 void sort(node_stack **a, node_stack **b)
 {
-    int len_a = stack_len(*a);
-	if(is_sorted(*a))
-		return ;
-    // Mover elementos de `a` a `b` hasta que queden 3 en `a`
-    while (len_a-- > 3 && !is_sorted(*a))
-    {
-        start_nodes(a,b); // Inicializar nodos en `b`
-        move_a_to_b(a, b); // Mover el nodo más barato de `a` a `b`
-    }
-
-    // Ordenar los 3 elementos restantes en `a`
-    sort_three(a);
+	int	chunk_size;
+	int size;
+	int start;
+	int end;
+	int max_positition;
 	
-    // Mover todos los elementos de `b` de vuelta a `a`
-    while (*b)
-    {
-        assing_cheap(b); // Inicializar nodos en `b`
-        move_b_to_a(a, b); // Mover el nodo más barato de `b` a `a`
-    }
-
-    // Asegurarse de que `a` esté completamente ordenado
-    assing_index(a); // Actualizar índices de los nodos
-    min_on_top(a); // Asegurar que el valor mínimo esté en la parte superior
+	size = stack_len(*a);
+	chunk_size = size_chunk(size);
+	start = 0;
+	end = chunk_size - 1;
+	
+	while(start < size - 1)
+	{
+		push_chunk_b(a,b,start,end);
+		start = end + 1;
+		end = start + chunk_size - 1;
+		if(end >= size - 1)
+			end = size - 1;
+	}
+	while (*b)
+	{
+		max_positition = get_max_position_index(b);
+		move_to_top(b,max_positition);
+		pa(a,b);
+	}
 }
